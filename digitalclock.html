@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Here's a wacky digital clock!</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style>
+    	#clock {
+			background-color: orange;
+			border: 100px;
+			margin: 20px;
+			padding: 10px;
+			width: 200px;
+			height: 200px;
+			color: white;
+		}
+	</style>
+ </head>
+ 	<body>
+ 	<div id="clock"></div>
+ 		<script>
+ 		$(document).ready(function() {
+
+ 			function getTime() {
+ 				var date = new Date();
+ 				var h = date.getHours();
+ 				var m = date.getMinutes();
+ 				var s = date.getSeconds();
+ 				var ms = date.getMilliseconds();
+
+ 				h = noMilitaryTime(h);
+ 				h = formatTime(h);
+ 				m = formatTime(m);
+ 				s = formatTime(s);
+ 				oddEven();
+ 				changeFontSize();
+ 				changeTextColor();
+
+ 				//Now I want to reference the div clock and add some text to it - using the .html command
+ 				$("#clock").html(h + ":" + m + ":" + s + ":" + ms);
+ 				//To update the time, use pre-set function setTimeout, input it the function getTime and it should update every 1000millisecs
+ 				var t = setTimeout(getTime, 1000);
+ 			}
+  				function noMilitaryTime(y) {
+ 					if (y > 12) {
+ 						return y - 12;
+ 					} else {
+ 						return y;
+ 					}
+ 				}
+ 				//Before drawing it to the screen, we want to make sure the seconds displays as "00"
+ 				function formatTime(x) {
+ 					if (x < 10) {
+ 						return "0" + x; //this returns as 0+whatever the "s" variable value is
+ 					} else {
+ 						return x;
+ 					}
+ 				}
+
+				function oddEven() { 
+			    	var today = new Date();
+			    	var s = today.getSeconds();
+			    if (s % 2 === 0) {
+			        $("#clock").css("background-color","green");
+			    }
+			    else{
+			        $("#clock").css("background-color", "black");
+			    }   
+			}
+				function changeFontSize() { 
+			    	var today = new Date();
+			    	var s = today.getSeconds();
+			    if (s % 5 === 0) {
+			        $("#clock").css("font-size", 35);
+			    }
+			    else{
+			    	$("#clock").css("font-size", 20);
+			    } 
+			}
+				function changeTextColor() { 
+			    	var today = new Date();
+			    	var s = today.getSeconds();
+			    if (s == "00") {
+			        $("#clock").css("color", "blue");
+			    }
+			    else{
+			    	$("#clock").css("color", "white");
+			    } 
+			}
+ 		//Invoke the function now
+ 			getTime();	
+ 	});
+ 		</script>
+	</body>
+</html>
+

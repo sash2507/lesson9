@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Day two of Javascript!</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="clock placeholder = "your name".css"/>    -->
+</head>
+
+<body>
+	<input id="name" type="text" placeholder="your name">
+	<button id="submitbutton">Submit here</button>
+
+	<script>
+	// JS code in here
+	//$(Document) means looking for a document, .ready() is an event that fully loads a page and "ready" is a pre-implemented/pre-defined function. The () mean you're calling the function. any value inside it is called an "argument".
+	//Document ready takes one function.
+	$(document).ready(function() {
+	//Defining a function is always function _its name_ ()
+	//Variable is good for creating something that you want to use later,instead of having to call a function multiple times. Do NOT put quotes around variables.
+
+		// function someName() {
+		// 	return "saloni";
+		// }		
+		// var name = someName();
+
+		// alert("hello" + someName());
+
+		// }
+		$("#submitbutton").click(function
+		 (){
+			var name = $("#name").val();
+			if (name === "") {
+				alert("enter your name");
+			} 
+			else {
+			alert("hello" + name);
+			}
+		});
+
+		// function greeting(firstname, age) {
+		// 	console.log(age);
+			//this function: takes a name
+			//and alerts hello that-name- takes name as an input
+
+		// 	return alert("hello" + firstname);
+		// }
+
+		// greeting ("saloni", 3);
+		// //this is how to invoke the function "greeting". however greeting always takes one argument - so you have to define a name here because you're now outside the function
+
+		//
+	});
+	</script>
+</body>
+</html>
