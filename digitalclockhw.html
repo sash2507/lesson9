@@ -1,91 +1,113 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Here's a wacky digital clock!</title>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <style>
-    	#clock {
-			background-color: orange;
-			border: 100px;
-			margin: 20px;
-			padding: 10px;
-			width: 200px;
-			height: 200px;
-			color: white;
-		}
-	</style>
- </head>
+	<head>
+	    <title>Here's a wacky digital clock!</title>
+	    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	    <style>
+	    	#clock {
+				background-color: orange;
+				border: 100px;
+				margin: 20px;
+				padding: 10px;
+				width: 200px;
+				height: 200px;
+				color: white;
+			}
+		</style>
+	 </head>
  	
  	<body>
- 	<div id="clock"></div>
+ 		<div id="clock"></div>
+
  		<script>
- 		$(document).ready(function() {
+ 			$(document).ready(function() {
 
- 			function getTime() {
- 				var date = new Date();
- 				var h = date.getHours();
- 				var m = date.getMinutes();
- 				var s = date.getSeconds();
- 				var ms = date.getMilliseconds();
+ 				//Font color array
+ 				var colors = ["yellow", "blue", "pink", "orange", "grey", "green", "brown"]
+ 				var i = 0;
+ 				var size = 16; //Font size set to 16 
 
- 				h = noMilitaryTime(h);
- 				h = formatTime(h);
- 				m = formatTime(m);
- 				s = formatTime(s);
- 				oddEven();
- 				changeFontSize();
- 				changeTextColor();
+ 				//This function sets up the clock using JS's predefined date/time functions
+	 			function getTime() {
+	 				var date = new Date();
+	 				var h = date.getHours();
+	 				var m = date.getMinutes();
+	 				var s = date.getSeconds();
+	 				var ms = date.getMilliseconds();
 
- 				$("#clock").html(h + ":" + m + ":" + s + ":" + ms);
- 				var t = setTimeout(getTime, 1000);
- 				}
+	 				//This function switches military to standard time
+	 				h = noMilitaryTime(h);
+	 				
+	 				//Clock helper function 
+	 				h = formatTime(h);
+	 				m = formatTime(m);
+	 				s = formatTime(s);
+	 				
+ 				$("#clock").html(h + ":" + m + ":" + s + ":" + ms); //This is the shell for clock to be displayed as HH:MM:SS:MS
+ 				
+ 				//This starts the clock
+ 				setTimeout(function() {
+ 					getTime();
+ 				}, 1000);
+ 					oddEven(s);
+ 				};
+
+ 				//Converts military time to regular
   				function noMilitaryTime(y) {
  					if (y > 12) {
  						return y - 12;
  					} else {
  						return y;
- 					}
- 				}
+ 					};
+ 				};
+ 				//Adds a 0 to time when time < 10
  				function formatTime(x) {
  					if (x < 10) {
  						return "0" + x; 
  					} else {
  						return x;
- 					}
- 				}
-				function oddEven() { 
-			    	var today = new Date();
-			    	var s = today.getSeconds();
-			    	if (s % 2 === 0) {
+ 					};
+ 				};
+ 				//Changes color of clock by checking if integer is odd/even ("if integer divided by 2=0, integer is even")
+				function oddEven(z) { 
+			    	if (z % 2 === 0) {
 			        $("#clock").css("background-color","green");
 			    	}
 			    	else {
 			        $("#clock").css("background-color", "black");
-			    	}   
-				}
+			    	};  
+				};
+				//Function "changeFontSize" changes font size every 10s (10000ms) - it has an embedded function within it - setInterval
+				//setInterval takes two inputs, size and time - that is why time is placed outside of the if/else statement
 				function changeFontSize() { 
-			    	var today = new Date();
-			    	var s = today.getSeconds();
-			    	if (s % 5 === 0) {
-			        $("#clock").css("font-size", 35);
-			    	}
-			    	else {
-			    	$("#clock").css("font-size", 20);
-			    	} 
-				}
+			    	setInterval(function(){
+			    		$("#clock").css("font-size", size + "px");
+			    		if (size==20){
+			    			size = 16;
+			    		} else {
+			    			size++;
+			    		}
+			    	}, 10000);
+			    };
+
+			    //Changes font color even 5s. Similar to the function above, "changeTextColor" invokes setInterval which takes an array of colors (defined above) and time as inputs
 				function changeTextColor() { 
-			    	var today = new Date();
-			    	var s = today.getSeconds();
-			    	if (s == "00") {
-			        $("#clock").css("color", "blue");
-			    	}
-			    	else {
-			    	$("#clock").css("color", "white");
-			    	} 
-				}
- 		//Invoke the original getTime function now
+					setInterval(function(){
+						$("#clock").css("color", colors[i]);
+						if (i != (colors.length-1)) {
+							i++;
+						} else {
+							i = 0;
+						}
+					}, 5000);
+				};
+
+ 			//Since all functions are independent of one another, they each need to be invoked separately
  			getTime();	
- 	});
+ 			changeFontSize();
+ 			changeTextColor();
+ 			});
+
  		</script>
 
 	</body>
